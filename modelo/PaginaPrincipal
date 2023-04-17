@@ -1,0 +1,38 @@
+<?php
+
+class model
+{
+
+    private $PDO;
+
+
+    public function __construct()
+    {
+        #traemos la conexion echa
+        require_once("../modelo/conexion.php");
+        $con = new db();
+        #entramos a la clase que creamos que es la conexion a la base de datos
+        $this->PDO = $con->conexion();
+    }
+
+    public function MostrarInformacion()
+    {
+        $stament = $this->PDO->prepare("SELECT * FROM colectivodeartespopulares");
+        return ($stament->execute()) ? $stament->fetchAll() : false;
+    }
+
+    public function ActivarCarusel()
+    {
+        $stament = $this->PDO->prepare("SELECT carusel FROM colectivodeartespopulares where id=1");
+        return ($stament->execute()) ? $stament : false;
+    }
+
+    public function MostrarCarusel()
+    {
+        $car = '';
+        $stament = $this->PDO->prepare("select carusel from colectivodeartespopulares where id BETWEEN 2 and 3");
+
+
+        return ($stament->execute()) ? $stament->fetchAll() : false;
+    }
+}
